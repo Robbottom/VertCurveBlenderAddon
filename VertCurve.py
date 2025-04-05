@@ -41,8 +41,8 @@ class ADD_OT_VERTEX(bpy.types.Operator):
     
     def execute(self, context):
        
-        mesh = bpy.data.meshes.new(name="NewMesh")
-        obj = bpy.data.objects.new("NewObject", mesh)
+        mesh = bpy.data.meshes.new(name="Vertex")
+        obj = bpy.data.objects.new("Vertex", mesh)
         
      
         bpy.context.collection.objects.link(obj)
@@ -52,6 +52,9 @@ class ADD_OT_VERTEX(bpy.types.Operator):
         bm.verts.ensure_lookup_table()
         bm.to_mesh(mesh)
         bm.free()
+        
+        obj.select_set(True)
+        context.view_layer.objects.active = obj
 
         return {'FINISHED'}
 
@@ -69,9 +72,7 @@ class AddScrewModifier(bpy.types.Panel):
         row = layout.row()
         row.label(text="Add a screw modifier", icon='MOD_SCREW')
         row.operator("object.modifier_add", text="Add Screw Modifier").type = 'SCREW'
-        
-        
-        
+
 def register():
     bpy.utils.register_class(VertCurve)
     bpy.utils.register_class(ADD_OT_VERTEX)
